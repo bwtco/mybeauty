@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_inherit_account_move_form" model="ir.ui.view">
+            <field name="name">view_inherit_account_move_form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="qr_code_image" widget='image' class="oe_avatar" force_save="1"/>
+                </xpath>
+
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//group[@id='other_tab_group']" position="after">
+                    <gorup string="Company Seal" name="company_seal">
+                        <field name="company_seal" widget="html"/>
+                    </gorup>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
