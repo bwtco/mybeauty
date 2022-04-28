@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="pos_config_view_form_inherit" model="ir.ui.view">
+            <field name="name">pos_config_view_form_inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@id='receipt']" position="inside">
+                    <div id="invoice_print_header_footer" class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="show_tax_invoice_header"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="show_tax_invoice_header"/>
+
+                        </div>
+                        <br/>
+                        <div class="o_setting_left_pane" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}">
+
+                        </div>
+                        <div class="o_setting_right_pane" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}">
+                            <label for="invoice_tax_header_logo" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}"/>
+                            <field name="invoice_tax_header_logo" widget="image" class="oe_avatar" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="o_setting_left_pane" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}">
+
+                        </div>
+                        <div class="o_setting_right_pane" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}">
+                            <label for="invoice_tax_footer_logo" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}"/>
+                            <field name="invoice_tax_footer_logo" widget="image" class="oe_avatar" attrs="{'invisible':[('show_tax_invoice_header','=',False)]}"/>
+                        </div>
+
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
