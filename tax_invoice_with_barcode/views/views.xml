@@ -501,8 +501,6 @@
                                                             <span t-esc="line.product_id.name"
                                                                   t-options="{'widget': 'text'}"/>
                                                             <br/>
-                                                            <span t-esc="line.product_id.product_name_arabic"
-                                                                  t-options="{'widget': 'text'}"/>
                                                         </t>
                                                         <t t-else="1">
                                                             <span t-esc="line.name"
