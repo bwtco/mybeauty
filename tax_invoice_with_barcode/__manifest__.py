@@ -30,7 +30,7 @@
         # 'views/templates.xml',
         'views/account_move.xml',
         'views/sales.xml',
-        'views/pos_config.xml',
+        # 'views/pos_config.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
