@@ -17,7 +17,7 @@ class Account_move(models.Model):
 	warehouse_name = fields.Char(string="Warehouse Name", required=False,compute='get_warehouse_name' )
 	company_seal = fields.Html(string="ختم الشركة",  )
 	check_pos = fields.Boolean(string="", compute='check_if_from_pos')
-	my_pos_config = fields.Many2one(comodel_name="pos.config", string="", compute='check_if_from_pos', required=False, )
+	# my_pos_config = fields.Many2one(comodel_name="pos.config", string="", compute='check_if_from_pos', required=False, )
 	customer_name = fields.Char(string="Customer Name", compute='check_if_from_pos', required=False, )
 	customer_phone = fields.Char(string="Customer Phone", compute='check_if_from_pos', required=False, )
 
@@ -25,19 +25,19 @@ class Account_move(models.Model):
 	def check_if_from_pos(self):
 		for rec in self:
 			rec = rec.sudo()
-			rec.my_pos_config = False
+			# rec.my_pos_config = False
 			rec.check_pos = False
 			rec.customer_name = rec.partner_id.display_name
 			rec.customer_phone = rec.partner_id.phone
-			pos_order = self.sudo().env['pos.order'].search([('name', '=', rec.invoice_origin)], limit=1)
-			if pos_order:
-				rec.my_pos_config = pos_order.session_id.config_id.id
-				rec.check_pos = True
-			else:
-				sale_order = self.sudo().env['sale.order'].search([('name', '=', rec.invoice_origin)], limit=1)
-				if sale_order:
-					rec.customer_name = sale_order.customer_name if sale_order.customer_name else sale_order.partner_id.display_name
-					rec.customer_phone = sale_order.customer_phone if sale_order.customer_phone else sale_order.partner_id.phone
+			# pos_order = self.sudo().env['pos.order'].search([('name', '=', rec.invoice_origin)], limit=1)
+			# if pos_order:
+				# rec.my_pos_config = pos_order.session_id.config_id.id
+			# 	rec.check_pos = True
+			# else:
+			sale_order = self.sudo().env['sale.order'].search([('name', '=', rec.invoice_origin)], limit=1)
+			if sale_order:
+				rec.customer_name = sale_order.customer_name if sale_order.customer_name else sale_order.partner_id.display_name
+				rec.customer_phone = sale_order.customer_phone if sale_order.customer_phone else sale_order.partner_id.phone
 
 	@api.depends('invoice_line_ids')
 	def get_warehouse_name(self):

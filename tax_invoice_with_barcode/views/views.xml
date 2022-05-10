@@ -20,7 +20,7 @@
 
         <template id="external_layout_standard_tax_invoice_report">
             <div class="header col-13">
-                <t t-if="o.check_pos and o.my_pos_config.invoice_tax_header_logo">
+                <t t-if="request.env.user.company_id.show_tax_invoice_header and request.env.company.invoice_tax_header_logo">
                     <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
                         <style>
                             .invoice_tax_header_logo img {
@@ -30,33 +30,17 @@
                             height: 115px;
                             }
                         </style>
-                        <span class="invoice_tax_header_logo" t-esc="o.my_pos_config.invoice_tax_header_logo"
+                        <span class="invoice_tax_header_logo" t-esc="o.company_id.invoice_tax_header_logo"
                               t-options='{"widget": "image"}'/>
                     </div>
                 </t>
                 <t t-else="">
-                    <t t-if="request.env.user.company_id.show_tax_invoice_header and request.env.company.invoice_tax_header_logo">
-                        <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
-                            <style>
-                                .invoice_tax_header_logo img {
-                                max-width: 100%!important;
-                                max-height: 100%!important;
-                                width: 1152px;
-                                height: 115px;
-                                }
-                            </style>
-                            <span class="invoice_tax_header_logo" t-esc="o.company_id.invoice_tax_header_logo"
-                                  t-options='{"widget": "image"}'/>
-                        </div>
-                    </t>
-                    <t t-else="">
-                        <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
-                            <!--                            <div class="col-3 mb4">-->
-                            <!--                                <img t-if="request.env.company.logo" t-att-src="image_data_uri(request.env.company.logo)" style="max-height: 45px;" alt="Logo"/>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-9 text-right" style="margin-top:22px;" t-field="request.env.company.report_header" name="moto"/>-->
-                        </div>
-                    </t>
+                    <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
+                        <!--                            <div class="col-3 mb4">-->
+                        <!--                                <img t-if="request.env.company.logo" t-att-src="image_data_uri(request.env.company.logo)" style="max-height: 45px;" alt="Logo"/>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-9 text-right" style="margin-top:22px;" t-field="request.env.company.report_header" name="moto"/>-->
+                    </div>
                 </t>
                 <div class="row zero_min_height">
                     <div class="col-12">
@@ -318,7 +302,7 @@
 
             <div class="footer o_standard_footer">
                 <div class="text-center" style="border-top: 0px;">
-                    <t t-if="o.check_pos and o.my_pos_config.invoice_tax_footer_logo">
+                    <t t-if="request.env.user.company_id.show_tax_invoice_header and request.env.company.invoice_tax_footer_logo">
                         <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
                             <style>
                                 .invoice_tax_footer_logo img {
@@ -328,33 +312,17 @@
                                 height: 115px;
                                 }
                             </style>
-                            <span class="invoice_tax_footer_logo" t-esc="o.my_pos_config.invoice_tax_footer_logo"
+                            <span class="invoice_tax_footer_logo" t-esc="o.company_id.invoice_tax_footer_logo"
                                   t-options='{"widget": "image"}'/>
                         </div>
                     </t>
                     <t t-else="">
-                        <t t-if="request.env.user.company_id.show_tax_invoice_header and request.env.company.invoice_tax_footer_logo">
-                            <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
-                                <style>
-                                    .invoice_tax_footer_logo img {
-                                    max-width: 100%!important;
-                                    max-height: 100%!important;
-                                    width: 1152px;
-                                    height: 115px;
-                                    }
-                                </style>
-                                <span class="invoice_tax_footer_logo" t-esc="o.company_id.invoice_tax_footer_logo"
-                                      t-options='{"widget": "image"}'/>
-                            </div>
-                        </t>
-                        <t t-else="">
-                            <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
-                                <!--                            <div class="col-3 mb4">-->
-                                <!--                                <img t-if="request.env.company.logo" t-att-src="image_data_uri(request.env.company.logo)" style="max-height: 45px;" alt="Logo"/>-->
-                                <!--                            </div>-->
-                                <!--                            <div class="col-9 text-right" style="margin-top:22px;" t-field="request.env.company.report_header" name="moto"/>-->
-                            </div>
-                        </t>
+                        <div style="width:1152px;height:115px;margin:auto;" class="row col-12">
+                            <!--                            <div class="col-3 mb4">-->
+                            <!--                                <img t-if="request.env.company.logo" t-att-src="image_data_uri(request.env.company.logo)" style="max-height: 45px;" alt="Logo"/>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-9 text-right" style="margin-top:22px;" t-field="request.env.company.report_header" name="moto"/>-->
+                        </div>
                     </t>
 
 
@@ -501,8 +469,7 @@
                                                             <span t-esc="line.product_id.name"
                                                                   t-options="{'widget': 'text'}"/>
                                                             <br/>
-                                                            <span t-esc="line.product_id.product_name_arabic"
-                                                                  t-options="{'widget': 'text'}"/>
+                                                            
                                                         </t>
                                                         <t t-else="1">
                                                             <span t-esc="line.name"
