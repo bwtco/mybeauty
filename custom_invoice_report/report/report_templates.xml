@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invoice_report_layout_standard">
+        <div t-attf-class="header o_company_#{company.id}_layout">
+            <div class="header-table">
+                <table class="table table-sm table-borderless">
+                    <tbody class="border border-dark">
+                        <tr>
+                            <td style="width: 40%;">
+                                <div>
+                                    <span>From:</span> <strong t-field="company.name"/>
+                                </div>
+                                <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["city", "state_id", "country_id"], "no_marker": true}'/>
+                            </td>
+                            <td class="text-center" rowspan="1" style="width: 20%;">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 50px;" alt="Logo"/>
+                            </td>
+                            <td class="text-right" style="width: 40%;">
+                                <div>
+                                    <!-- <strong t-field="company.arabic_name"/> -->
+                                </div>
+                                <div t-field="company.with_context(lang='ar_001').partner_id" t-options='{"widget": "contact", "fields": ["city", "state_id", "country_id"], "no_marker": true}' class="pull-right"/>
+                            </td>
+                        </tr>
+                       <!-- <tr>
+                            <td>
+                                <span>C.R.No:</span> <span t-field="company.company_registry"/>
+                            </td>-->
+                            <!-- <td>colspan</td> -->
+                            <!--<td class="text-right">
+                                <span t-field="company.company_registry"/> <span>السجل التجاري</span>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td>
+                                <div>
+                                  <span>C.R.No:</span> <span t-field="company.company_registry"/>
+                                </div>
+                                <div>
+                                    P.O.Box: <span t-esc="company.pobox"/>,
+                                    <t t-esc="company.city"/> <t t-esc="company.zip"/>
+                                </div>
+                                <div>
+                                    <t t-esc="company.country_id.name"/>
+                                    <br/>
+                                    <span>Tel: <t t-esc="company.phone"/></span>
+                                </div>
+                                <div>
+                                  <span>VAT</span> <span t-field="company.vat"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="mt0 mb0" t-field="company.report_header"/>
+                                <style>
+                                    .qr_image {
+                                    max-width: 70%!important;
+                                    max-height: 70%!important;
+                                    }
+                                </style>
+                                <img class="qr_image" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.qr_code_image, 200,200)"/>
+                                <br/>
+                                <strong class="text-uppercase" t-if="o.move_type in ('out_invoice', 'out_refund', 'out_receipt')">Vat Invoice</strong>
+                                <strong class="text-uppercase" t-elif="o.move_type in ('in_invoice', 'in_refund', 'in_receipt')">Vendor Bill</strong>
+                            </td>
+                            <td class="text-right">
+                                <div>
+                                  <span t-field="company.company_registry"/> <span>السجل التجاري</span>
+                                </div>
+                                <div>
+                                    <t t-esc="company.zip"/> <t t-esc="company.with_context(lang='ar_001').city"/>
+                                    <span t-esc="company.pobox"/> ص.ب
+                                </div>
+                                <div>
+                                    <t t-esc="company.with_context(lang='ar_001').country_id.name"/>
+                                    <br/>
+                                    <span><t t-esc="company.phone"/> تلفون</span>
+                                </div>
+                                <div>
+                                  <span t-field="company.vat"/> <span>رقم ضريبة القيمه المضافه</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/><br/><br/>
+        
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="company.email" class="list-inline-item d-inline">Email: <span t-field="company.email"/></li>
+                    <li t-if="company.website" class="list-inline-item d-inline">Web: <span t-field="company.website"/></li>
+                </ul>
+            </div>
+            <div class="w-100 d-table">
+                <div class="pull-left" name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div t-if="report_type == 'pdf'" class="pull-right text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="invoice_report_layout">
+
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="companyany_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-call="custom_invoice_report.invoice_report_layout_standard"><t t-raw="0"/></t>
+    </template>
+
+</odoo>
