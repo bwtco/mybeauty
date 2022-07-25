@@ -13,7 +13,7 @@
                                 <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["city", "state_id", "country_id"], "no_marker": true}'/>
                             </td>
                             <td class="text-center" rowspan="1" style="width: 20%;">
-                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 50px;" alt="Logo"/>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo"/>
                             </td>
                             <td class="text-right" style="width: 40%;">
                                 <div>
@@ -50,7 +50,7 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                <span class="mt0 mb0" t-field="company.report_header"/>
+                                <!--<span class="mt0 mb0" t-field="company.report_header"/>-->
                                 <style>
                                     .qr_image {
                                     max-width: 70%!important;
